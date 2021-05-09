@@ -1,16 +1,7 @@
 ﻿  main.cpp
-f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(13): warning C4326: “main”的返回类型应为“int”而非“void”
-f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(56): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
-f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(67): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(115): warning C4244: “=”: 从“_Tp”转换到“_Tp”，可能丢失数据
-          with
-          [
-              _Tp=int
-          ]
-          and
-          [
-              _Tp=float
-          ]
+f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(14): warning C4326: “main”的返回类型应为“int”而非“void”
+f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(57): warning C4267: “+=”: 从“size_t”转换到“int”，可能丢失数据
+f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(68): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(116): warning C4244: “=”: 从“_Tp”转换到“_Tp”，可能丢失数据
           with
           [
@@ -20,6 +11,15 @@ f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibrat
           [
               _Tp=float
           ]
-f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(145): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(117): warning C4244: “=”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=int
+          ]
+          and
+          [
+              _Tp=float
+          ]
 f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(146): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\desktop_file\robot_vision\visual studio 2017\cameracalibration\cameracalibration\main.cpp(147): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
   CameraCalibration.vcxproj -> F:\Desktop_File\Robot_Vision\Visual Studio 2017\CameraCalibration\x64\Debug\CameraCalibration.exe

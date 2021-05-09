@@ -5,6 +5,7 @@
 #include "opencv2/imgproc/types_c.h"
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 using namespace cv;
 using namespace std;
@@ -50,15 +51,15 @@ void main()
 			cvtColor(imageInput, view_gray, CV_BGR2GRAY);
 			/* 亚像素精确化 */
 			cornerSubPix(view_gray, image_points_buf, Size(5, 5), Size(-1, -1), TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 30, 0.1));
-			    //亚像素精确化方法二
-			    //Size(5,5)是搜索窗口的大小,Size(-1,-1)表示没有死区
-			    //第四个参数定义求角点的迭代过程的终止条件，可以为迭代次数和角点精度两者的组合
+			//亚像素精确化方法二
+			//Size(5,5)是搜索窗口的大小,Size(-1,-1)表示没有死区
+			//第四个参数定义求角点的迭代过程的终止条件，可以为迭代次数和角点精度两者的组合
 			count += image_points_buf.size();
 			image_points_seq.push_back(image_points_buf);//保存亚像素角点
 			drawChessboardCorners(view_gray, board_size, image_points_buf, false);
-				//用于绘制被成功标定的角点，输入8位灰度或者彩色图像
-				//第四个参数是标志位，用来指示定义的棋盘内角点是否被完整的探测到
-				//false表示有未被探测到的内角点，这时候函数会以圆圈标记出检测到的内角点
+			//用于绘制被成功标定的角点，输入8位灰度或者彩色图像
+			//第四个参数是标志位，用来指示定义的棋盘内角点是否被完整的探测到
+			//false表示有未被探测到的内角点，这时候函数会以圆圈标记出检测到的内角点
 			namedWindow("Camera Calibration", WINDOW_NORMAL);
 			imshow("Camera Calibration", view_gray);//显示图片
 			waitKey(500);
@@ -178,5 +179,50 @@ void main()
 	std::cout << "完成保存" << endl;
 	fout << endl;
 
+	/************************************************************************
+	显示定标结果
+	*************************************************************************/
+	Mat mapx = Mat(image_size, CV_32FC1);
+	Mat mapy = Mat(image_size, CV_32FC1);
+	Mat R = Mat::eye(3, 3, CV_32F);
+	cout << "保存矫正图像" << endl;
+	string imageFileName;
+	std::stringstream StrStm;
+	for (int i = 1; i <= image_count; i++)
+	{
+		cout << "Frame # " << i << "....." << endl;
+		initUndistortRectifyMap(cameraMatrix, distCoeffs, R, cameraMatrix,
+			image_size, CV_32FC1, mapx, mapy);//用来计算畸变映射
+
+		StrStm.clear();//清除缓存
+		imageFileName.clear();
+		string filePath_left_source = "sample/left/source/left";
+		string filePath_left_rectify = "sample/left/rectify/rectify"; //矫正后图片存储位置
+		StrStm << setw(2) << setfill('0') << i;
+		StrStm >> imageFileName;
+		filePath_left_source += imageFileName;
+		filePath_left_source += ".jpg";
+		filePath_left_rectify += imageFileName;
+		filePath_left_rectify += ".jpg";
+		//获取图片路径
+		Mat imageSource = imread(filePath_left_source);//读取图像
+		Mat newimage = imageSource.clone();//拷贝图像
+
+		remap(imageSource, newimage, mapx, mapy, INTER_LINEAR);//把求得的映射应用到图像上
+															   //与initUndistortRectifyMap结合使用，为矫正方法之一
+
+															   //undistort(imageSource,newimage,cameraMatrix,distCoeffs);//矫正方法二
+															   //第五个参数newCameraMatrix=noArray()，默认跟cameraMatrix保持一致,故可省
+
+		imwrite(filePath_left_rectify, newimage);//保存矫正后的图片
+		imshow("Original Image", imageSource);
+		waitKey(500);//暂停0.5s
+		imshow("Undistorted Image", newimage);
+		waitKey(500);
+
+	}
+	fin.close();
+	fout.close();
+	getchar();//等待输入以退出
 	return;
 }
